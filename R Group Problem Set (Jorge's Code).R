@@ -2,42 +2,32 @@ rm(list = ls())
 set.seed(24)
 
 
-
-expected_tests <- function(pop=10000, groupsize=4, positve_rate=0.09){
-
 # For a given population, what pool size will result in the least amount of tests required to test each person
-
-
-
-# How many groups can we compose from our population size?
-numgroups = pop/groupsize
-
-
-# This is the probability that a group will have at least one positive test, requiring a re-test
-groupf<-(1-dbinom(0,groupsize, positve_rate))
-
-# Based off of this failure rate, how many groups will need to retest?  
-failedgroups<- numgroups*groupf
-
-#failedgroups= as.integer(failedgroups)
-
-#For each group that requires a retest, the number of tests required to retest each person in that group is directly tied to the group size (since we will test each member)
-newtests<- groupsize*failedgroups
-
-#numgroups<-as.integer(numgroups)
-
-# The total number of tests required to evaluate a given number of people
-if(groupsize>1){
-totaltests<-newtests+numgroups
-}
-else{
-  totaltests=pop
+expected_tests <- function(pop=10000, groupsize=4, positve_rate=0.09){
+  
+  # How many groups can we compose from our population size?
+  numgroups = pop/groupsize
+  
+  # This is the probability that a group will have at least one positive test, requiring a re-test
+  groupf<-(1-dbinom(0,groupsize, positve_rate))
+  
+  # Based off of this failure rate, how many groups will need to retest?  
+  failedgroups<- numgroups*groupf
+  
+  #For each group that requires a retest, the number of tests required to retest each person in that group is directly tied to the group size (since we will test each member)
+  newtests<- groupsize*failedgroups
+  
+  # The total number of tests required to evaluate a given number of people
+  if(groupsize>1){
+    totaltests<-newtests+numgroups
+  }
+  else{
+    totaltests=pop
+  }
+  
+  return(totaltests)
 }
 
-return(totaltests)
-#answer<-cat(totaltests, groupsize)
-#print (answer)
-}
 
 
 # Depending on the accuracy you'd like to achieve set the population size, greater population equals greater accuracy
