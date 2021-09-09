@@ -58,10 +58,7 @@ for(positive_rate in 1:100){
 }
 
 print(optimal)
-names(optimal)[1] = "Positivity Rate"
-names(optimal)[2] = "Optimal Pool Size"
 plot(optimal)
-# ggplot(optimal, aes(x=optimal[1], y=optimal[2])) + geom_dotplot()
 
 # Since we're still getting used to R, this will allow us to see/confirm the results in Excel
 write.csv(tests_per_capita, file="data.csv")
