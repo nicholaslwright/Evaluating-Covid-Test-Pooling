@@ -1,3 +1,4 @@
+library("ggplot2")
 rm(list = ls())
 set.seed(24)
 
@@ -48,12 +49,19 @@ tests_per_capita <- pop/data
 
 
 # I also want to see how different positive test rates in the population affect our optimal pool size
-optimal <- 1:100
+optimal <- data.frame(matrix(ncol = 2, nrow = 100))
 
 # For each positive test rate of the population (1%, 2%, 3%, ...) this will tell us what the optimal pool size is for that context
 for(positive_rate in 1:100){
-  optimal[positive_rate] <- which(tests_per_capita[,positive_rate]==max(tests_per_capita[,positive_rate]))
+  optimal[positive_rate, 1] <- positive_rate
+  optimal[positive_rate, 2] <- which(tests_per_capita[,positive_rate]==max(tests_per_capita[,positive_rate]))
 }
+
+print(optimal)
+names(optimal)[1] = "Positivity Rate"
+names(optimal)[2] = "Optimal Pool Size"
+plot(optimal)
+# ggplot(optimal, aes(x=optimal[1], y=optimal[2])) + geom_dotplot()
 
 # Since we're still getting used to R, this will allow us to see/confirm the results in Excel
 write.csv(tests_per_capita, file="data.csv")

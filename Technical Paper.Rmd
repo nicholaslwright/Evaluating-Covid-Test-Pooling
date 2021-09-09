@@ -84,3 +84,9 @@ for(positive_rate in 1:100){
 
 ```
 
+With this vector we can see how the optimal pool size changes in response to the population's Positivity Rate. (See Plot Below)
+
+```{r}
+plot(optimal)
+```
+
